@@ -1,0 +1,4 @@
+flask
+redis
+lxml
+beautifulsoup4
