@@ -19,7 +19,7 @@ def get_medals():
 
 @app.route('/medals/<country>')
 def get_medals_by_country(country):
-    pass
+    return olympics.get_medals_based_on_country(country)
 
 
 if __name__ == '__main__':
