@@ -1,9 +1,8 @@
 from flask import Flask
 
-from olympics.models import app_config, Olympics, create_json_response
+from olympics.models import Olympics, create_json_response
 
 app = Flask(__name__)
-app.config.update(app_config)
 
 olympics = Olympics()
 
