@@ -1,0 +1,1 @@
+Fetches winter olympics 2014 medal standings from Wikipedia
