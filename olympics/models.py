@@ -1,6 +1,7 @@
 import ConfigParser
 import json
 import os
+import re
 import redis
 import urllib
 
@@ -45,25 +46,32 @@ class Olympics (object):
         table = soup.find_all('table', attrs={'class':'wikitable'})[0]
         rows = table.findAll('tr')
 
-        list = []
+        list = {}
 
         for i in range(1, len(rows)-1):
             cols = rows[i].findAll('td')
 
             index = 0 if len(cols) == 5 else 1
 
-            list.append({
+            list[cols[index].find('span').string[1:-1]] = {
                 'c': cols[index].find('a').string,
-                'cc': cols[index].find('span').string[1:-1],
                 'g': int(cols[index+1].string),
                 's': int(cols[index+2].string),
                 'b': int(cols[index+3].string),
                 't': int(cols[index+1].string) + int(cols[index+2].string)+  int(cols[index+3].string)
-            })
+            }
 
-        return create_json_response(list)
+        return list
 
 
     def get_medals_based_on_country (self, country):
-        return country
+        list = self.get_medals()
 
+        pattern = re.compile('%s' % country, re.IGNORECASE)
+
+        if country.upper() in list:
+            return list[country.upper()]
+
+        res = [k for k in list.values() if pattern.search(k['c'])]
+
+        return res if res is not None else []
