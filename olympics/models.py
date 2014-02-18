@@ -48,7 +48,7 @@ class Olympics (object):
         pattern = re.compile('%s' % country, re.IGNORECASE)
 
         if country.upper() in list:
-            return list[country.upper()]
+            return [list[country.upper()]]
 
         res = [k for k in list.values() if pattern.search(k['c'])]
 
